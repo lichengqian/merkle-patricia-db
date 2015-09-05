@@ -33,6 +33,7 @@ import GHC.Generics
 newtype SHAPtr = SHAPtr B.ByteString deriving (Show, Eq, Read, Generic)
 
 instance Format SHAPtr where
+  format x | x == emptyTriePtr = CL.yellow "<empty>"
   format (SHAPtr x) = CL.yellow $ BC.unpack $ B16.encode x
 
 instance Binary SHAPtr where
