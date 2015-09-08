@@ -1,11 +1,24 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Blockchain.Database.MerklePatricia.Internal (
-  Key, Val, MPDB(..), SHAPtr(..),
-  openMPDB, emptyTriePtr, sha2SHAPtr,
-  unsafePutKeyVal, unsafeGetKeyVals, unsafeGetAllKeyVals,unsafeDeleteKey,
-  getNodeData, putNodeData,
-  keyToSafeKey, getCommonPrefix, replace, prependToKey
+  Key,
+  Val,
+  MPDB(..),
+  SHAPtr(..),
+  NodeData(..),
+  openMPDB,
+  emptyTriePtr,
+  sha2SHAPtr,
+  unsafePutKeyVal,
+  unsafeGetKeyVals,
+  unsafeGetAllKeyVals,
+  unsafeDeleteKey,
+  getNodeData,
+  putNodeData,
+  keyToSafeKey,
+  getCommonPrefix,
+  replace,
+  prependToKey
   ) where
 
 import Control.Monad.Trans.Resource
