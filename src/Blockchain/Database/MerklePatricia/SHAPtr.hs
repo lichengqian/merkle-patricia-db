@@ -9,6 +9,7 @@ module Blockchain.Database.MerklePatricia.SHAPtr (
 
 import Control.Monad
 import qualified Crypto.Hash.SHA3 as C
+import Data.Aeson
 import Data.Binary
 import qualified Data.ByteString as B
 import qualified Data.ByteString.Base16 as B16
@@ -19,6 +20,7 @@ import qualified Blockchain.Colors as CL
 import Blockchain.Data.RLP
 import Blockchain.ExtWord
 import Blockchain.Format
+import Blockchain.MiscJSON
 import Blockchain.SHA
 
 import GHC.Generics
@@ -36,6 +38,9 @@ instance Format SHAPtr where
   format x | x == emptyTriePtr = CL.yellow "<empty>"
   format (SHAPtr x) = CL.yellow $ BC.unpack $ B16.encode x
 
+instance FromJSON SHAPtr
+instance ToJSON SHAPtr
+  
 instance Binary SHAPtr where
   put (SHAPtr x) = sequence_ $ put <$> B.unpack x
   get = SHAPtr <$> B.pack <$> replicateM 32 get

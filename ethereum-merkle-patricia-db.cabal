@@ -25,19 +25,20 @@ library
     default-language: Haskell98
     build-depends: 
                    base >= 4 && < 5
-                 , resourcet
-                 , cryptohash
-                 , bytestring
+                 , aeson
                  , base16-bytestring
+                 , binary
+                 , bytestring
+                 , cryptohash
                  , data-default
+                 , ethereum-rlp
                  , ethereum-util
+                 , leveldb-haskell
                  , mtl
                  , nibblestring
-                 , leveldb-haskell
-                 , ethereum-rlp
-                 , binary
-                 , ansi-wl-pprint
+                 , resourcet
                  , transformers
+                 , ansi-wl-pprint
     exposed-modules:
                    Blockchain.Database.MerklePatricia
                    Blockchain.Database.MerklePatricia.Internal
