@@ -20,7 +20,7 @@ import qualified Blockchain.Colors as CL
 import Blockchain.Data.RLP
 import Blockchain.ExtWord
 import Blockchain.Format
-import Blockchain.MiscJSON
+import Blockchain.MiscJSON ()
 import Blockchain.SHA
 
 import GHC.Generics
