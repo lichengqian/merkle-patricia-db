@@ -28,7 +28,6 @@ module Blockchain.Database.MerklePatricia (
 import qualified Crypto.Hash.SHA3 as SHA3
 import Control.Monad.Trans.Resource
 import Data.Default
-import Data.Functor ((<$>))
 import Data.Maybe (isJust)
 import qualified Database.LevelDB as DB
 

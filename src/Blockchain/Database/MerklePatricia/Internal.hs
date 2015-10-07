@@ -26,7 +26,6 @@ import qualified Crypto.Hash.SHA3 as SHA3
 import qualified Data.ByteString as B
 import Data.Default
 import Data.Function
-import Data.Functor
 import Data.List
 import Data.Maybe
 import qualified Data.NibbleString as N

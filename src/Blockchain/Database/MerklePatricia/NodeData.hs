@@ -13,7 +13,6 @@ import qualified Data.ByteString as B
 import qualified Data.ByteString.Base16 as B16
 import Data.ByteString.Internal
 import qualified Data.ByteString.Char8 as BC
-import Data.Functor
 import qualified Data.NibbleString as N
 import Text.PrettyPrint.ANSI.Leijen hiding ((<$>))
 import Numeric
