@@ -34,7 +34,6 @@ library
                  , ethereum-rlp
                  , ethereum-util
                  , leveldb-haskell
-                 , mtl
                  , nibblestring
                  , resourcet
                  , transformers
