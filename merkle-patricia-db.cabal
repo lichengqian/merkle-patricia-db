@@ -7,7 +7,7 @@ license-file:  LICENSE
 maintainer:    jamshidnh@gmail.com
 synopsis: A modified Merkle Patricia DB
 category:      Data Structures
-license: BSD3
+license: Apache 2.0
 description:  
     The modified Merkle Patricia DB described in the Ethereum Yellowpaper
 
