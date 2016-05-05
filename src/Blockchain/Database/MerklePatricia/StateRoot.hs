@@ -1,10 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveGeneric     #-}
 
-module Blockchain.Database.MerklePatricia.SHAPtr (
-  SHAPtr(..),
+module Blockchain.Database.MerklePatricia.StateRoot (
+  StateRoot(..),
   emptyTriePtr,
-  sha2SHAPtr
+  sha2StateRoot
   ) where
 
 import Control.Monad
@@ -31,27 +31,27 @@ import GHC.Generics
 -- (ie- the pointer to the full set of key/value pairs at a particular time in history), and
 -- will be of interest if you need to refer to older or parallel version of the data.
 
-newtype SHAPtr = SHAPtr B.ByteString deriving (Show, Eq, Read, Generic)
+newtype StateRoot = StateRoot B.ByteString deriving (Show, Eq, Read, Generic)
 
-instance Format SHAPtr where
+instance Format StateRoot where
   format x | x == emptyTriePtr = CL.yellow "<empty>"
-  format (SHAPtr x) = CL.yellow $ BC.unpack $ B16.encode x
+  format (StateRoot x) = CL.yellow $ BC.unpack $ B16.encode x
 
-instance FromJSON SHAPtr
-instance ToJSON SHAPtr
+instance FromJSON StateRoot
+instance ToJSON StateRoot
   
-instance Binary SHAPtr where
-  put (SHAPtr x) = sequence_ $ put <$> B.unpack x
-  get = SHAPtr <$> B.pack <$> replicateM 32 get
+instance Binary StateRoot where
+  put (StateRoot x) = sequence_ $ put <$> B.unpack x
+  get = StateRoot <$> B.pack <$> replicateM 32 get
 
-instance RLPSerializable SHAPtr where
-    rlpEncode (SHAPtr x) = rlpEncode x
-    rlpDecode x = SHAPtr $ rlpDecode x
+instance RLPSerializable StateRoot where
+    rlpEncode (StateRoot x) = rlpEncode x
+    rlpDecode x = StateRoot $ rlpDecode x
 
 -- | The stateRoot of the empty database.
-emptyTriePtr::SHAPtr
-emptyTriePtr = SHAPtr $ C.hash 256 $ rlpSerialize $ rlpEncode (0::Integer)
+emptyTriePtr::StateRoot
+emptyTriePtr = StateRoot $ C.hash 256 $ rlpSerialize $ rlpEncode (0::Integer)
 
-sha2SHAPtr::SHA->SHAPtr
-sha2SHAPtr (SHA x) = SHAPtr $ B.pack $ word256ToBytes x
+sha2StateRoot::SHA->StateRoot
+sha2StateRoot (SHA x) = StateRoot $ B.pack $ word256ToBytes x
 

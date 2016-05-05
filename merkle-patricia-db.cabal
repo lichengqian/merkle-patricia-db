@@ -44,7 +44,7 @@ library
                    Blockchain.Database.MerklePatricia.Diff
     other-modules:
                    Blockchain.Database.MerklePatricia.MPDB
-                   Blockchain.Database.MerklePatricia.SHAPtr
+                   Blockchain.Database.MerklePatricia.StateRoot
                    Blockchain.Database.MerklePatricia.NodeData
     ghc-options: -Wall
     buildable: True

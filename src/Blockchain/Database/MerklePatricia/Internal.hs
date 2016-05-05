@@ -4,11 +4,11 @@ module Blockchain.Database.MerklePatricia.Internal (
   Key,
   Val,
   MPDB(..),
-  SHAPtr(..),
+  StateRoot(..),
   NodeData(..),
   openMPDB,
   emptyTriePtr,
-  sha2SHAPtr,
+  sha2StateRoot,
   unsafePutKeyVal,
   unsafeGetKeyVals,
   unsafeGetAllKeyVals,
@@ -34,7 +34,7 @@ import qualified Database.LevelDB as DB
 import Blockchain.Data.RLP
 import Blockchain.Database.MerklePatricia.MPDB
 import Blockchain.Database.MerklePatricia.NodeData
-import Blockchain.Database.MerklePatricia.SHAPtr
+import Blockchain.Database.MerklePatricia.StateRoot
 import Blockchain.Format
 
 unsafePutKeyVal::MonadResource m=>MPDB->Key->Val->m MPDB
@@ -207,10 +207,10 @@ deleteKey_NodeRef db key nodeRef =
 
 getNodeData::MonadResource m=>MPDB->NodeRef->m NodeData
 getNodeData _ (SmallRef x) = return $ rlpDecode $ rlpDeserialize x
-getNodeData db (PtrRef ptr@(SHAPtr p)) = do
+getNodeData db (PtrRef ptr@(StateRoot p)) = do
   bytes <-
     fromMaybe
-    (error $ "Missing SHAPtr in call to getNodeData: " ++ format ptr) <$>
+    (error $ "Missing StateRoot in call to getNodeData: " ++ format ptr) <$>
     DB.get (ldb db) def p
   return $ bytes2NodeData bytes
     where
@@ -218,12 +218,12 @@ getNodeData db (PtrRef ptr@(SHAPtr p)) = do
       bytes2NodeData bytes | B.null bytes = EmptyNodeData
       bytes2NodeData bytes = rlpDecode $ rlpDeserialize $ B.pack $ B.unpack bytes
 
-putNodeData::MonadResource m=>MPDB->NodeData->m SHAPtr
+putNodeData::MonadResource m=>MPDB->NodeData->m StateRoot
 putNodeData db nd = do
   let bytes = rlpSerialize $ rlpEncode nd
       ptr = SHA3.hash 256 bytes
   DB.put (ldb db) def ptr bytes
-  return $ SHAPtr ptr
+  return $ StateRoot ptr
 
 -----
 

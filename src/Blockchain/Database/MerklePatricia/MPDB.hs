@@ -13,7 +13,7 @@ import Data.Default
 import qualified Database.LevelDB as DB
 --import Text.PrettyPrint.ANSI.Leijen hiding ((<$>))
 
-import Blockchain.Database.MerklePatricia.SHAPtr
+import Blockchain.Database.MerklePatricia.StateRoot
 
 -- | This is the database reference type, contianing both the handle to the underlying database, as well
 -- as the stateRoot to the current tree holding the data.
@@ -24,7 +24,7 @@ import Blockchain.Database.MerklePatricia.SHAPtr
 data MPDB =
   MPDB {
     ldb::DB.DB,
-    stateRoot::SHAPtr
+    stateRoot::StateRoot
     }
 
 -- | This function is used to create an MPDB object corresponding to the blank database.

@@ -19,8 +19,8 @@
 -- Patricia Merkle Tree.
 
 module Blockchain.Database.MerklePatricia (
-  Key, Val, MPDB(..), SHAPtr(..),
-  openMPDB, emptyTriePtr, sha2SHAPtr,
+  Key, Val, MPDB(..), StateRoot(..),
+  openMPDB, emptyTriePtr, sha2StateRoot,
   putKeyVal, getKeyVal, deleteKey, keyExists,
   initializeBlank
   ) where

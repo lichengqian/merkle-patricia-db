@@ -18,7 +18,7 @@ import Text.PrettyPrint.ANSI.Leijen hiding ((<$>))
 import Numeric
 
 import Blockchain.Data.RLP
-import Blockchain.Database.MerklePatricia.SHAPtr
+import Blockchain.Database.MerklePatricia.StateRoot
 import Blockchain.Format
 
 --import Debug.Trace
@@ -33,7 +33,7 @@ type Val = RLPObject
 
 -------------------------
 
-data NodeRef = SmallRef B.ByteString | PtrRef SHAPtr deriving (Show, Eq)
+data NodeRef = SmallRef B.ByteString | PtrRef StateRoot deriving (Show, Eq)
 
 emptyRef::NodeRef
 emptyRef = SmallRef $ B.pack [0x80]
@@ -77,7 +77,7 @@ instance RLPSerializable NodeData where
     where
       encodeChoice::NodeRef->RLPObject
       encodeChoice (SmallRef "") = rlpEncode (0::Integer)
-      encodeChoice (PtrRef (SHAPtr x)) = rlpEncode x
+      encodeChoice (PtrRef (StateRoot x)) = rlpEncode x
       encodeChoice (SmallRef o) = rlpDeserialize o
       encodeVal::Maybe Val->RLPObject
       encodeVal Nothing = rlpEncode (0::Integer)
@@ -99,7 +99,7 @@ instance RLPSerializable NodeData where
   rlpDecode (RLPArray [a, val])
       | terminator = ShortcutNodeData s $ Right val
       | B.length (rlpSerialize val) >= 32 =
-          ShortcutNodeData s (Left $ PtrRef $ SHAPtr (BC.pack $ rlpDecode val))
+          ShortcutNodeData s (Left $ PtrRef $ StateRoot (BC.pack $ rlpDecode val))
       | otherwise =
           ShortcutNodeData s (Left $ SmallRef $ rlpSerialize val)
     where
@@ -115,7 +115,7 @@ instance RLPSerializable NodeData where
       getPtr::RLPObject->NodeRef
       getPtr o | B.length (rlpSerialize o) < 32 = SmallRef $ rlpSerialize o
       --getPtr o@(RLPArray [_, _]) = SmallRef $ rlpSerialize o
-      getPtr p = PtrRef $ SHAPtr $ rlpDecode p
+      getPtr p = PtrRef $ StateRoot $ rlpDecode p
   rlpDecode x = error ("Missing case in rlpDecode for NodeData: " ++ show x)
 
 
