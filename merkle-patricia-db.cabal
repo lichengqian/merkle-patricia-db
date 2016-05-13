@@ -32,7 +32,6 @@ library
                  , cryptohash
                  , data-default
                  , ethereum-rlp
-                 , blockapps-util
                  , leveldb-haskell
                  , nibblestring
                  , resourcet
